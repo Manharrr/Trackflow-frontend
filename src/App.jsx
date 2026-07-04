@@ -15,7 +15,7 @@ import CompaniesPage from './pages/super-admin/CompaniesPage'
 import AnalyticsPage from './pages/super-admin/AnalyticsPage'
 import SettingsPage from './pages/super-admin/SettingsPage'
 import MFAPage from './pages/MFAPage'
-
+import HomePage from './pages/HomePage'
 
 // import DashboardLayout from './layouts/DashboardLayout'
 // import SuperAdminDashboard from './pages/super-admin/SuperAdminDashboard'
@@ -48,10 +48,10 @@ export default function App() {
         path="/dashboard"
         element={<DashboardPage />}
       />
-      <Route
+      {/* <Route
         path="/"
         element={<Navigate to="/dashboard" replace />}
-      />
+      /> */}
       <Route
         path="/verify-phone"
         element={
@@ -146,9 +146,13 @@ export default function App() {
         />
       </Route>
       <Route
-  path="/mfa"
-  element={<MFAPage />}
-/>
+        path="/mfa"
+        element={<MFAPage />}
+      />
+      <Route
+        path="/"
+        element={<HomePage />}
+      />
     </Routes>
   )
 }
