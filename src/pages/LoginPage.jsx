@@ -2,13 +2,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axiosInstance from '../api/axios'
 import { useAuth } from '../contexts/AuthContext'
+import GoogleLoginButton from '../components/auth/GoogleLoginButton'
 
 export default function LoginPage() {
     const navigate = useNavigate()
-    const { login } = useAuth()
+    const { login, googleLogin } = useAuth()
 
     const [formData, setFormData] = useState({
-        email: '',
+        phone: '',
         password: '',
     })
 
@@ -36,9 +37,36 @@ export default function LoginPage() {
 
 
             const data = await login(
-                formData.email,
+                formData.phone,
                 formData.password
             )
+
+            if (
+                data.phone_verify
+            ) {
+                navigate(
+                    '/verify-phone',
+                    {
+                        state: {
+                            email:
+                                data.email,
+                        },
+                    }
+                )
+
+                return
+            }
+
+            if (
+                data.pending
+            ) {
+                navigate(
+                    '/pending-approval'
+                )
+
+                return
+            }
+
 
             // MFA required
             if (data.mfa_required) {
@@ -81,6 +109,7 @@ export default function LoginPage() {
             setLoading(false)
         }
     }
+
     return (
         <div className="min-h-screen bg-[#F7F8F7] grid lg:grid-cols-2">
 
@@ -89,7 +118,7 @@ export default function LoginPage() {
                 <div className="w-full max-w-md">
 
                     <h1 className="text-5xl font-bold text-[#0F172A] mb-3">
-                        Welcome back
+                        Welcome
                     </h1>
 
                     <p className="text-gray-500 mb-10">
@@ -102,19 +131,21 @@ export default function LoginPage() {
                     >
 
                         <div>
+
                             <label className="block mb-2 font-medium">
-                                Email Address
+                                Phone Number
                             </label>
 
                             <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
+                                type="tel"
+                                name="phone"
+                                value={formData.phone}
                                 onChange={handleChange}
-                                placeholder="you@example.com"
+                                placeholder="+91 9876543210"
                                 className="w-full border rounded-2xl p-4"
                                 required
                             />
+
                         </div>
 
                         <div>
@@ -131,6 +162,17 @@ export default function LoginPage() {
                                 className="w-full border rounded-2xl p-4"
                                 required
                             />
+
+                            <div className="text-right">
+
+                                <Link
+                                    to="/forgot-password"
+                                    className="text-sm text-[#0F766E] hover:underline"
+                                >
+                                    Forgot Password?
+                                </Link>
+
+                            </div>
                         </div>
 
                         {error && (
@@ -160,20 +202,17 @@ export default function LoginPage() {
                         <div className="h-px flex-1 bg-gray-200" />
                     </div>
 
-                    <button
-                        type="button"
-                        className="w-full border rounded-2xl p-4"
-                    >
-                        Continue with Google
-                    </button>
+                    <div className="flex justify-center">
+                        <GoogleLoginButton />
+                    </div>
 
                     <p className="text-center mt-8 text-gray-500">
-                        Don't have an account?{' '}
+                        Don't have a company account?{" "}
                         <Link
                             to="/register"
                             className="text-[#0F766E]"
                         >
-                            Create one
+                            Register Company
                         </Link>
                     </p>
 

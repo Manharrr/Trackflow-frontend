@@ -35,42 +35,45 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // App load — refresh cookie undenkil auto login
-//   useEffect(() => {
-//     const initAuth = async () => {
-//       try {
-//         const refreshRes = await axiosInstance.post('/auth/token/refresh/')
-//         setAccessToken(refreshRes.data.access)
-//         const meRes = await axiosInstance.get('/auth/me/')
-//         dispatch({ type: 'LOGIN_SUCCESS', payload: meRes.data })
-//       } catch {
-//         setAccessToken(null)
-//         dispatch({ type: 'LOGOUT' })
-//       }
-//     }
-//     initAuth()
-//   }, [])
-
 useEffect(() => {
-  const initAuth = async () => {
-    try {
-      const meRes =
-        await axiosInstance.get(
-          '/auth/me/'
-        )
 
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: meRes.data,
-      })
-    } catch {
-      dispatch({
-        type: 'LOGOUT',
-      })
+    const initAuth = async () => {
+
+        try {
+
+            const refreshRes =
+                await axiosInstance.post(
+                    "/auth/token/refresh/"
+                )
+
+            setAccessToken(
+                refreshRes.data.access
+            )
+
+            const meRes =
+                await axiosInstance.get(
+                    "/auth/me/"
+                )
+
+            dispatch({
+                type: "LOGIN_SUCCESS",
+                payload: meRes.data,
+            })
+
+        } catch {
+
+            setAccessToken(null)
+
+            dispatch({
+                type: "LOGOUT",
+            })
+
+        }
+
     }
-  }
 
-  initAuth()
+    initAuth()
+
 }, [])
 
   // 401 interceptor — auto refresh
@@ -106,37 +109,35 @@ useEffect(() => {
 //   }
 
 const login = async (
-  email,
-  password
+    phone,
+    password
 ) => {
-  const res =
-    await axiosInstance.post(
-      '/auth/login/',
-      {
-        email,
-        password,
-      }
+
+    const res =
+        await axiosInstance.post(
+            '/auth/login/',
+            {
+                phone,
+                password,
+            }
+        )
+
+    if (
+        res.data.mfa_required
+    ) {
+        return res.data
+    }
+
+    setAccessToken(
+        res.data.access
     )
 
-  // MFA Required
-  if (
-    res.data.mfa_required
-  ) {
+    dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: res.data.user,
+    })
+
     return res.data
-  }
-
-  // Normal Login
-  setAccessToken(
-    res.data.access
-  )
-
-  dispatch({
-    type: 'LOGIN_SUCCESS',
-    payload:
-      res.data.user,
-  })
-
-  return res.data
 }
 
   const register = async (email, username, password, confirm_password) => {
@@ -157,8 +158,59 @@ const login = async (
     }
   }
 
+  
+    const googleLogin = async (
+    token
+) => {
+
+    const res =
+        await axiosInstance.post(
+            '/auth/google/',
+            {
+                token,
+            }
+        )
+
+    // Phone Verification
+    if (
+        res.data.phone_verify
+    ) {
+        return res.data
+    }
+
+    // Company Pending
+    if (
+        res.data.pending
+    ) {
+        return res.data
+    }
+
+    // MFA Required
+    if (
+        res.data.mfa_required
+    ) {
+        return res.data
+    }
+
+    // Normal Login
+    setAccessToken(
+        res.data.access
+    )
+
+    dispatch({
+        type:
+        'LOGIN_SUCCESS',
+        payload:
+        res.data.user,
+    })
+
+    return res.data
+
+}
+
+
   return (
-    <AuthContext.Provider value={{ ...state, login, register, logout }}>
+    <AuthContext.Provider value={{ ...state, login, googleLogin,register, logout }}>
       {children}
     </AuthContext.Provider>
   )

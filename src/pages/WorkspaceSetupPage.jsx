@@ -29,7 +29,7 @@ export default function WorkspaceSetupPage() {
 
       try {
         await axiosInstance.post(
-          '/auth/register-company/',
+          '/auth/register/',
           formData
         )
 
@@ -37,9 +37,25 @@ export default function WorkspaceSetupPage() {
           '/pending-approval'
         )
 
-      } catch (err) {
-        console.log(err)
       }
+      catch (err) {
+
+    console.log(
+        JSON.stringify(
+            err.response.data,
+            null,
+            2
+        )
+    )
+
+}
+    //  catch (err) {
+    //     console.log(err.response.data)
+    //     setError( err.response?.data?.message ||
+    //         "Registration failed"
+
+    //     )
+    //   }
     }
 
   return (
