@@ -17,104 +17,69 @@ export default function GoogleLoginButton() {
 
         try {
 
-            const data =
-                await googleLogin(
-                    credentialResponse.credential
-                )
+            const data = await googleLogin(credentialResponse.credential)
 
-            if (
-                data.phone_verify
-            ) {
-
-                navigate(
-                    '/verify-phone',
-                    {
-                        state: {
-                            email:
-                                data.email,
-                        },
-                    }
-                )
-
+            if (data.status === "COMPLETE_COMPANY_SETUP") {
+                navigate('/workspace/setup', { state: { email: data.email } })
                 return
             }
 
-            if (
-                data.pending
-            ) {
-
-                navigate(
-                    '/pending-approval'
-                )
-
+            if (data.phone_verify) {
+                navigate('/verify-phone', {
+                    state: {
+                        phone: data.phone,
+                        email: data.email,
+                    },
+                })
                 return
             }
 
-            if (
-                data.mfa_required
-            ) {
-
-                navigate(
-                    '/mfa',
-                    {
-                        state: {
-                            email:
-                                data.email,
-                        },
-                    }
-                )
-
+            if (data.pending) {
+                navigate('/pending-approval')
                 return
             }
 
-            const role =
-                data.user.role
-
-            if (
-                role ===
-                'super_admin'
-            ) {
-
-                navigate(
-                    '/super-admin'
-                )
-
+            if (data.mfa_required) {
+                navigate('/mfa', {
+                    state: {
+                        email: data.email,
+                    },
+                })
+                return
             }
 
-            else if (
-                role ===
-                'company_admin'
-            ) {
+            // const role = data.user.role
+            // if (role === 'super_admin') {
+            //     navigate('/super-admin')
+            // } else if (role === 'company_admin') {
+            //     navigate('/dashboard')
+            // } else if (role === 'operations_manager') {
+            //     navigate('/operations')
+            // } else {
+            //     navigate('/employee')
+            // }
 
-                navigate(
-                    '/dashboard'
-                )
-
+            if (data.redirectUrl) {
+                window.location.href = data.redirectUrl;
+                return;
             }
 
-            else if (
-                role ===
-                'operations_manager'
-            ) {
+            const role = data.user?.role || data.role;
 
-                navigate(
-                    '/operations'
-                )
-
-            }
-
-            else {
-
-                navigate(
-                    '/employee'
-                )
-
+            if (role === "super_admin") {
+                navigate("/super-admin")
+            } else if (role === "company_admin") {
+                navigate("/dashboard")
+            } else if (role === "operations_manager") {
+                navigate("/operations")
+            } else {
+                navigate("/employee")
             }
 
         }
 
         catch (
-            err
+        err
         ) {
 
             console.log(err)

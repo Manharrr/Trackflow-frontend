@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './contexts/AuthContext'
 import './index.css'
 import App from './App.jsx'
@@ -8,7 +9,7 @@ import App from './App.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  
     <GoogleOAuthProvider
       clientId={
         import.meta.env
@@ -17,9 +18,10 @@ createRoot(document.getElementById('root')).render(
     >
       <BrowserRouter>
         <AuthProvider>
+          <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
           <App />
         </AuthProvider>
       </BrowserRouter>
     </GoogleOAuthProvider>
-  </StrictMode>
+  
 )

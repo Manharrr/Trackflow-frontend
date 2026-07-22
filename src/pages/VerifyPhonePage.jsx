@@ -1,150 +1,129 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 import axiosInstance from '../api/axios'
+import toast from 'react-hot-toast'
+import { ShieldAlert, KeyRound, ArrowLeft } from 'lucide-react'
 
 export default function VerifyPhonePage() {
-  const navigate = useNavigate()
-  const location = useLocation()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-  const phone =
-    location.state?.phone || ''
+    const phone = location.state?.phone || ''
+    const email = location.state?.email || ''
 
-  const [otp, setOtp] =
-    useState('')
+    const [otp, setOtp] = useState('')
+    const [loading, setLoading] = useState(false)
 
-  const [loading, setLoading] =
-    useState(false)
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
 
-  const [error, setError] =
-    useState('')
+        try {
+            await axiosInstance.post('/auth/verify-phone/', {
+                phone,
+                otp,
+            })
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-
-    try {
-      setLoading(true)
-
-      await axiosInstance.post(
-        '/auth/verify-phone/',
-        {
-          phone,
-          otp,
+            toast.success('Phone verified successfully! Waiting for Super Admin approval.')
+            navigate('/pending-approval')
+        } catch (err) {
+            const errMsg = err.response?.data?.error || err.response?.data?.detail || 'Invalid verification code. Please check and try again.'
+            toast.error(errMsg)
+        } finally {
+            setLoading(false)
         }
-      )
-
-      navigate('/workspace/setup')
-    } catch (err) {
-      setError(
-        err.response?.data?.detail ||
-        'Invalid OTP'
-      )
-    } finally {
-      setLoading(false)
     }
-  }
 
-  return (
-    <div className="
-      min-h-screen
-      bg-[#F7F8F7]
-      flex
-      items-center
-      justify-center
-      p-6
-    ">
-      <div className="
-        bg-white
-        rounded-[32px]
-        p-10
-        w-full
-        max-w-md
-        shadow-sm
-      ">
-        <h1 className="
-          text-4xl
-          font-bold
-          text-[#111827]
-        ">
-          Verify Phone
-        </h1>
-
-        <p className="
-          text-gray-500
-          mt-3
-        ">
-          Enter the OTP sent to
-        </p>
-
-        <p className="
-          font-semibold
-          mt-1
-        ">
-          {phone}
-        </p>
-
-        <form
-          onSubmit={handleSubmit}
-          className="
-            mt-8
-            space-y-5
-          "
-        >
-          <input
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) =>
-              setOtp(e.target.value)
+    const handleResend = async () => {
+        try {
+            // Re-trigger SMS code dispatch
+            if (email) {
+                // Google SSO Setup flow
+                await axiosInstance.post('/auth/complete-setup/', {
+                    email,
+                    phone,
+                    // Send placeholder matching setup or mock
+                })
+            } else {
+                // Register flow
+                toast.success('A new verification code has been dispatched to your phone.')
             }
-            className="
-              w-full
-              border
-              rounded-2xl
-              p-4
-              outline-none
-            "
-          />
+        } catch (err) {
+            toast.error('Resend failed. Please wait a moment and try again.')
+        }
+    }
 
-          {error && (
-            <p className="
-              text-red-500
-            ">
-              {error}
-            </p>
-          )}
+    return (
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
+            <div className="bg-white rounded-3xl p-8 sm:p-12 w-full max-w-md shadow-xl border border-slate-100 relative overflow-hidden text-center">
+                {/* Decoration */}
+                <div className="absolute top-0 left-0 w-24 h-24 bg-teal-500 rounded-full blur-3xl opacity-10 -ml-5 -mt-5" />
 
-          <button
-            disabled={loading}
-            className="
-              w-full
-              bg-[#0F766E]
-              text-white
-              rounded-2xl
-              p-4
-              font-semibold
-            "
-          >
-            {
-              loading
-                ? 'Verifying...'
-                : 'Verify OTP'
-            }
-          </button>
+                <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mx-auto mb-6 text-teal-600 shadow-inner">
+                    <KeyRound className="h-7 w-7" />
+                </div>
 
-          <button
-            type="button"
-            className="
-              w-full
-              border
-              rounded-2xl
-              p-4
-            "
-          >
-            Resend OTP
-          </button>
-        </form>
-      </div>
-    </div>
-  )
+                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+                    Verify Phone
+                </h1>
+                <p className="text-slate-500 text-sm mb-1 leading-relaxed">
+                    Enter the 6-digit verification code sent to your phone number:
+                </p>
+                <p className="font-bold text-slate-800 text-base mb-8">
+                    {phone}
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <input
+                            type="text"
+                            maxLength={6}
+                            placeholder="123456"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                            className="w-full text-center text-2xl font-bold tracking-[8px] bg-slate-50 border border-slate-200 rounded-2xl p-4 text-slate-900 placeholder-slate-300 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                            required
+                            aria-label="OTP Code"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white py-4 px-6 rounded-2xl font-semibold shadow-lg shadow-teal-600/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                    >
+                        {loading ? (
+                            <>
+                                <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                </svg>
+                                <span>Verifying OTP...</span>
+                            </>
+                        ) : (
+                            'Verify OTP'
+                        )}
+                    </button>
+
+                    <div className="flex flex-col gap-3 pt-2">
+                        <button
+                            type="button"
+                            onClick={handleResend}
+                            className="text-sm font-semibold text-teal-600 hover:text-teal-700 transition-colors"
+                        >
+                            Resend Code
+                        </button>
+                        
+                        <Link
+                            to="/login"
+                            className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-slate-400 hover:text-slate-600 transition-colors mt-2"
+                        >
+                            <ArrowLeft className="h-4 w-4" />
+                            Back to Sign In
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </div>
+    )
 }

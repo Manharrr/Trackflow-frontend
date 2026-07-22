@@ -1,171 +1,171 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import axiosInstance from '../api/axios'
+import toast from 'react-hot-toast'
+import { ShieldCheck, Building2, Globe, Phone, UserCheck } from 'lucide-react'
 
 export default function WorkspaceSetupPage() {
-  const navigate =
-    useNavigate()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-  const [formData,
-    setFormData
-  ] = useState({
-    company_name: '',
-    subdomain: '',
-    phone: '',
-  })
+    // Retrieve email passed from Google SSO setup flow redirection
+    const email = location.state?.email || ''
 
-  const handleChange =
-    (e) => {
-      setFormData({
-        ...formData,
-        [e.target.name]:
-          e.target.value,
-      })
+    const [formData, setFormData] = useState({
+        company_name: '',
+        subdomain: '',
+        phone: '',
+    })
+
+    const [loading, setLoading] = useState(false)
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        })
     }
 
-  const handleSubmit =
-    async (e) => {
-      e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
 
-      try {
-        await axiosInstance.post(
-          '/auth/register/',
-          formData
-        )
+        try {
+            const payload = {
+                email,
+                company_name: formData.company_name,
+                workspace_code: formData.subdomain,
+                phone: formData.phone,
+            }
 
-        navigate(
-          '/pending-approval'
-        )
+            await axiosInstance.post('/auth/complete-setup/', payload)
 
-      }
-      catch (err) {
+            toast.success('Company setup submitted! Verification code sent via SMS.')
 
-    console.log(
-        JSON.stringify(
-            err.response.data,
-            null,
-            2
-        )
+            navigate('/verify-phone', {
+                state: {
+                    phone: formData.phone,
+                    email,
+                },
+            })
+        } catch (err) {
+            const errData = err.response?.data
+            if (errData) {
+                const firstErrorKey = Object.keys(errData)[0]
+                const firstErrorVal = errData[firstErrorKey]
+                const detailMsg = Array.isArray(firstErrorVal) ? firstErrorVal[0] : firstErrorVal
+                toast.error(`${firstErrorKey}: ${detailMsg}`)
+            } else {
+                toast.error('Setup failed. Please review your company configuration.')
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
+            <div className="bg-white rounded-3xl p-8 sm:p-12 w-full max-w-lg shadow-xl border border-slate-100 relative overflow-hidden">
+                {/* Visual decorations */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500 rounded-full blur-3xl opacity-10 -mr-10 -mt-10" />
+
+                <div className="flex items-center gap-2 mb-6">
+                    <div className="bg-teal-600 p-2 rounded-xl text-white shadow-md shadow-teal-600/10">
+                        <UserCheck className="h-5 w-5" />
+                    </div>
+                    <span className="text-base font-bold text-slate-900">TrackFlow Setup</span>
+                </div>
+
+                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+                    Complete Workspace Configuration
+                </h1>
+                <p className="text-slate-500 mb-8 text-sm">
+                    Configure the remaining company details for email profile <strong className="text-slate-700">{email}</strong>.
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                            Company Name
+                        </label>
+                        <div className="relative rounded-2xl shadow-sm">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                <Building2 className="h-5 w-5" />
+                            </div>
+                            <input
+                                type="text"
+                                name="company_name"
+                                placeholder="Example Logistics"
+                                value={formData.company_name}
+                                onChange={handleChange}
+                                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                required
+                                aria-label="Company Name"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                            Company Subdomain / Workspace Code
+                        </label>
+                        <div className="relative rounded-2xl shadow-sm">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                <Globe className="h-5 w-5" />
+                            </div>
+                            <input
+                                type="text"
+                                name="subdomain"
+                                placeholder="example-logistics"
+                                value={formData.subdomain}
+                                onChange={handleChange}
+                                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                required
+                                aria-label="Company Subdomain Workspace Code"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                            Company Phone Number
+                        </label>
+                        <div className="relative rounded-2xl shadow-sm">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                <Phone className="h-5 w-5" />
+                            </div>
+                            <input
+                                type="tel"
+                                name="phone"
+                                placeholder="+91 9876543210"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                required
+                                aria-label="Company Phone Number"
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white py-4 px-6 rounded-2xl font-semibold shadow-lg shadow-teal-600/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                    >
+                        {loading ? (
+                            <>
+                                <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                </svg>
+                                <span>Submitting...</span>
+                            </>
+                        ) : (
+                            'Submit For Approval'
+                        )}
+                    </button>
+                </form>
+            </div>
+        </div>
     )
-
-}
-    //  catch (err) {
-    //     console.log(err.response.data)
-    //     setError( err.response?.data?.message ||
-    //         "Registration failed"
-
-    //     )
-    //   }
-    }
-
-  return (
-    <div className="
-      min-h-screen
-      bg-[#F7F8F7]
-      flex
-      items-center
-      justify-center
-      p-6
-    ">
-      <div className="
-        bg-white
-        rounded-[32px]
-        p-10
-        w-full
-        max-w-lg
-        shadow-sm
-      ">
-        <h1 className="
-          text-4xl
-          font-bold
-        ">
-          Create Workspace
-        </h1>
-
-        <p className="
-          text-gray-500
-          mt-3
-        ">
-          Setup your company
-          workspace.
-        </p>
-
-        <form
-          onSubmit={
-            handleSubmit
-          }
-          className="
-            mt-8
-            space-y-5
-          "
-        >
-          <input
-            type="text"
-            name="company_name"
-            placeholder="Company Name"
-            value={
-              formData.company_name
-            }
-            onChange={
-              handleChange
-            }
-            className="
-              w-full
-              border
-              rounded-2xl
-              p-4
-            "
-          />
-
-          <input
-            type="text"
-            name="subdomain"
-            placeholder="Subdomain"
-            value={
-              formData.subdomain
-            }
-            onChange={
-              handleChange
-            }
-            className="
-              w-full
-              border
-              rounded-2xl
-              p-4
-            "
-          />
-
-          <input
-            type="text"
-            name="phone"
-            placeholder="Company Phone"
-            value={
-              formData.phone
-            }
-            onChange={
-              handleChange
-            }
-            className="
-              w-full
-              border
-              rounded-2xl
-              p-4
-            "
-          />
-
-          <button
-            className="
-              w-full
-              bg-[#0F766E]
-              text-white
-              rounded-2xl
-              p-4
-            "
-          >
-            Submit For Approval
-          </button>
-        </form>
-      </div>
-    </div>
-  )
 }
