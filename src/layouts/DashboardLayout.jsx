@@ -17,22 +17,3 @@ export default function DashboardLayout() {
     </div>
   )
 }
-// import { Outlet } from 'react-router-dom'
-// import Sidebar from '../components/layouts/Sidebar'
-// import Header from '../components/layouts/Header'
-
-// export default function DashboardLayout() {
-//   return (
-//     <div className="flex min-h-screen bg-[#F7F7F4]">
-//       <Sidebar />
-
-//       <div className="flex-1">
-//         <Header />
-
-//         <main className="p-6">
-//           <Outlet />
-//         </main>
-//       </div>
-//     </div>
-//   )
-// }
