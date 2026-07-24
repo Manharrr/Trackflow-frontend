@@ -40,7 +40,7 @@ export default function Sidebar() {
     menu = [
       { name: 'Dashboard', path: '/operations', icon: LayoutDashboard },
       { name: 'Orders', path: '/operations/orders', icon: Package },
-      { name: 'Employees', path: '/operations/employees', icon: Users },
+      { name: 'Employees', path: '/dashboard/employees/create', icon: Users },
     ]
   } else {
     menu = [

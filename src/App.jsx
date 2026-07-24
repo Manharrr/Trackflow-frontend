@@ -34,6 +34,8 @@ import EmployeeDashboard from './pages/employee/EmployeeDashboard'
 import CompanyDetailsPage from './pages/super-admin/CompanyDetailsPage'
 
 import OrdersPage from './pages/company-admin/OrderPage'
+import EmployeeCreatePage from './pages/company-admin/employees/EmployeeCreatePage'
+import ActivateAccountPage from './pages/auth/ActivateAccountPage'
 
 
 
@@ -128,6 +130,11 @@ export default function App() {
                 element={<ResetPasswordPage />}
             />
 
+            <Route
+                path="/activate-account/:token"
+                element={<ActivateAccountPage />}
+            />
+
             {/* Standalone Protected Routes (No Layout Frame) */}
             <Route
                 path="/company/setup"
@@ -182,14 +189,25 @@ export default function App() {
                 />
 
                 <Route
+                    path="/dashboard/employees"
+                    element={<EmployeeCreatePage />}
+                />
+
+                <Route
+                    path="/dashboard/employees/create"
+                    element={<EmployeeCreatePage />}
+                />
+
+                <Route
+                    path="/operations/employees/create"
+                    element={<EmployeeCreatePage />}
+                />
+
+                <Route
     path="/dashboard/orders"
     element={<OrdersPage />}
 />
 
-<Route
-    path="/dashboard/employees"
-    element={<CompanyDashboard />}
-/>
 
 <Route
     path="/dashboard/analytics"
