@@ -60,26 +60,6 @@ export default function MFAPage() {
             } else {
                 navigate("/employee")
             }
-
-            // const token = res.data.access
-            // await completeMfaLogin(token)
-            // // const user = res.data.user
-
-            // // Logs user into context and saves headers to prevent loop
-            // // completeMfaLogin(user, token)
-
-            // toast.success('MFA verification successful!')
-
-            // const role = user.role
-            // if (role === 'super_admin') {
-            //     navigate('/super-admin')
-            // } else if (role === 'company_admin') {
-            //     navigate('/dashboard')
-            // } else if (role === 'operations_manager') {
-            //     navigate('/operations')
-            // } else {
-            //     navigate('/employee')
-            // }
         } catch (err) {
             const errMsg = err.response?.data?.error || err.response?.data?.detail || 'Invalid MFA code. Please verify your Google Authenticator app code.'
             toast.error(errMsg)
@@ -89,22 +69,22 @@ export default function MFAPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
-            <div className="bg-white rounded-3xl p-8 sm:p-12 w-full max-w-md shadow-xl border border-slate-100 relative overflow-hidden text-center">
+        <div className="min-h-screen bg-bg-tint flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
+            <div className="bg-white rounded-[2rem] p-8 sm:p-12 w-full max-w-md shadow-xl border border-border-light relative overflow-hidden text-center hover:border-primary/10 transition-all duration-300">
                 {/* Decoration */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-teal-500 rounded-full blur-3xl opacity-10 -mr-5 -mt-5" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl opacity-40 -mr-5 -mt-5" />
 
-                <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mx-auto mb-6 text-teal-600 shadow-inner">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 text-primary-dark shadow-sm">
                     <Fingerprint className="h-7 w-7" />
                 </div>
 
-                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+                <h1 className="text-3xl font-extrabold text-dark-text tracking-tight mb-2">
                     MFA Verification
                 </h1>
-                <p className="text-slate-500 text-sm mb-1 leading-relaxed">
+                <p className="text-muted-gray text-sm mb-1 leading-relaxed">
                     Enter the 6-digit verification code from Microsoft / Google Authenticator for profile:
                 </p>
-                <p className="font-bold text-slate-800 text-sm mb-8 truncate">
+                <p className="font-bold text-dark-text text-sm mb-8 truncate font-mono">
                     {email}
                 </p>
 
@@ -116,7 +96,7 @@ export default function MFAPage() {
                             placeholder="123456"
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
-                            className="w-full text-center text-2xl font-bold tracking-[8px] bg-slate-50 border border-slate-200 rounded-2xl p-4 text-slate-900 placeholder-slate-300 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                            className="w-full text-center text-2xl font-bold tracking-[8px] bg-white border border-border-light rounded-xl p-4 text-dark-text placeholder-slate-300 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none"
                             required
                             aria-label="Authenticator Code"
                         />
@@ -125,7 +105,7 @@ export default function MFAPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white py-4 px-6 rounded-2xl font-semibold shadow-lg shadow-teal-600/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                        className="w-full bg-gradient-to-r from-primary to-primary-dark hover:opacity-95 active:scale-[0.98] text-white h-12 rounded-xl font-bold shadow-lg shadow-primary/15 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer text-sm"
                     >
                         {loading ? (
                             <>
@@ -142,7 +122,7 @@ export default function MFAPage() {
 
                     <Link
                         to="/login"
-                        className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-slate-400 hover:text-slate-600 transition-colors mt-4"
+                        className="inline-flex items-center justify-center gap-1.5 text-sm font-bold text-primary hover:text-primary-dark hover:underline transition-colors mt-4"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         Back to Sign In

@@ -26,7 +26,6 @@ export default function Sidebar() {
       { name: 'Dashboard', path: '/super-admin', icon: LayoutDashboard },
       { name: 'Companies', path: '/super-admin/companies', icon: Building2 },
       { name: 'Analytics', path: '/super-admin/analytics', icon: BarChart3 },
-      // { name: 'Settings', path: '/super-admin/settings', icon: Settings },
       { name: 'Profile', path: '/profile', icon: User },
     ]
   } else if (user?.role === 'company_admin') {
@@ -52,31 +51,33 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`bg-white border-r border-slate-100 flex flex-col justify-between transition-all duration-300 relative z-20 ${
+      className={`bg-white border-r border-border-light/70 flex flex-col justify-between transition-all duration-300 relative z-20 h-screen sticky top-0 ${
         collapsed ? 'w-20' : 'w-72'
       }`}
     >
       <div>
         {/* Sidebar Header */}
-        <div className="h-20 flex items-center justify-between px-6 border-b border-slate-100">
+        <div className="h-20 flex items-center justify-between px-6 border-b border-border-light/50">
           {!collapsed && (
-            <h1 className="text-2xl font-black text-teal-600 tracking-tight flex items-center gap-2">
-              <span className="bg-teal-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-extrabold text-lg">T</span>
-              TrackFlow
+            <h1 className="text-xl font-extrabold text-dark-text tracking-tight flex items-center gap-2.5">
+              <span className="bg-gradient-to-tr from-primary to-primary-dark text-white w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-lg shadow-md shadow-primary/10">
+                T
+              </span>
+              <span>TrackFlow<span className="text-primary font-black">.ai</span></span>
             </h1>
           )}
           {collapsed && (
-            <div className="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center font-extrabold text-lg mx-auto">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white flex items-center justify-center font-extrabold text-lg mx-auto shadow-md shadow-primary/10">
               T
             </div>
           )}
           
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-1.5 rounded-lg border border-slate-150 hover:bg-slate-50 text-slate-400 hover:text-slate-600 transition-colors absolute right-[-15px] top-7 bg-white shadow-sm"
+            className="p-1.5 rounded-lg border border-border-light/60 hover:bg-bg-tint text-muted-gray hover:text-dark-text transition-colors absolute right-[-14px] top-6.5 bg-white shadow-sm cursor-pointer z-30"
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {collapsed ? <ChevronRight className="h-4.5 w-4.5" /> : <ChevronLeft className="h-4.5 w-4.5" />}
+            {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </button>
         </div>
 
@@ -89,15 +90,23 @@ export default function Sidebar() {
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                  `flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-250 relative group ${
                     isActive
-                      ? 'bg-teal-50 text-teal-700 shadow-sm shadow-teal-600/5'
-                      : 'text-slate-550 hover:bg-slate-50 hover:text-slate-800'
+                      ? 'bg-primary/10 text-primary-dark shadow-sm'
+                      : 'text-muted-gray hover:bg-bg-tint/60 hover:text-dark-text'
                   } ${collapsed ? 'justify-center' : ''}`
                 }
               >
-                <Icon className="h-5 w-5 flex-shrink-0" />
-                {!collapsed && <span>{item.name}</span>}
+                {({ isActive }) => (
+                  <>
+                    {/* Active vertical bar marker */}
+                    {isActive && !collapsed && (
+                      <span className="absolute left-0 top-3 bottom-3 w-1 bg-primary rounded-r-full" />
+                    )}
+                    <Icon className={`h-5 w-5 flex-shrink-0 transition-transform duration-300 group-hover:scale-105 ${isActive ? 'text-primary' : 'text-slate-400 group-hover:text-dark-text'}`} />
+                    {!collapsed && <span>{item.name}</span>}
+                  </>
+                )}
               </NavLink>
             )
           })}
@@ -105,7 +114,7 @@ export default function Sidebar() {
       </div>
 
       {/* Sidebar Footer Logout Button */}
-      <div className="p-4 border-t border-slate-100">
+      <div className="p-4 border-t border-border-light/50">
         <button
           onClick={logout}
           className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition-all duration-200 cursor-pointer ${

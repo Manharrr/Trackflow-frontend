@@ -31,28 +31,28 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
-      <div className="bg-white rounded-3xl p-8 sm:p-12 w-full max-w-md shadow-xl border border-slate-100 relative overflow-hidden text-center">
+    <div className="min-h-screen bg-bg-tint flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
+      <div className="bg-white rounded-[2rem] p-8 sm:p-12 w-full max-w-md shadow-xl border border-border-light relative overflow-hidden text-center hover:border-primary/10 transition-all duration-300">
         {/* Decoration */}
-        <div className="absolute top-0 right-0 w-24 h-24 bg-teal-500 rounded-full blur-3xl opacity-10 -mr-5 -mt-5" />
+        <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl opacity-40 -mr-5 -mt-5" />
 
-        <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mx-auto mb-6 text-teal-600 shadow-inner">
+        <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 text-primary-dark shadow-sm">
           <KeyRound className="h-7 w-7" />
         </div>
 
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+        <h1 className="text-3xl font-extrabold text-dark-text tracking-tight mb-2">
           Forgot Password
         </h1>
-        <p className="text-slate-500 text-sm mb-8 leading-relaxed">
+        <p className="text-muted-gray text-sm mb-8 leading-relaxed">
           Enter your phone number to receive a 6-digit verification code.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6 text-left">
+        <form onSubmit={handleSubmit} className="space-y-5 text-left">
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
+            <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
               Registered Phone Number
             </label>
-            <div className="relative rounded-2xl shadow-sm">
+            <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                 <Phone className="h-5 w-5" />
               </div>
@@ -61,7 +61,7 @@ export default function ForgotPasswordPage() {
                 placeholder="+91 9876543210"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                 required
                 aria-label="Phone Number"
               />
@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white py-4 px-6 rounded-2xl font-semibold shadow-lg shadow-teal-600/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+            className="w-full bg-gradient-to-r from-primary to-primary-dark hover:opacity-95 active:scale-[0.98] text-white h-12 rounded-xl font-bold shadow-lg shadow-primary/15 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer text-sm"
           >
             {loading ? (
               <>
@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
           <div className="flex justify-center pt-2">
             <Link
               to="/login"
-              className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-slate-400 hover:text-slate-600 transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 text-sm font-bold text-slate-400 hover:text-dark-text transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Sign In

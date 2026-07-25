@@ -75,32 +75,40 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
-            <div className="w-full max-w-6xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden grid lg:grid-cols-12 min-h-[700px]">
+        <div className="min-h-screen bg-bg-tint flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fade-in">
+            <div className="w-full max-w-6xl bg-white border border-border-light rounded-[2rem] shadow-xl overflow-hidden grid lg:grid-cols-12 min-h-[700px] hover:border-primary/10 transition-all duration-300">
                 
                 {/* Left Form Column */}
-                <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-center">
+                <div className="lg:col-span-7 px-8 sm:px-16 py-12 sm:py-16 flex flex-col justify-center text-left">
                     <div className="max-w-xl w-full mx-auto">
-                        <div className="flex items-center gap-2 mb-6">
-                            <div className="bg-teal-600 p-2 rounded-lg text-white">
-                                <ShieldCheck className="h-5 w-5" />
+                        
+                        <div className="flex items-center gap-3 mb-8 group">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-primary-dark flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-primary/25">
+                                T
                             </div>
-                            <span className="text-lg font-bold text-slate-900">TrackFlow AI</span>
+                            <div>
+                                <h2 className="font-extrabold text-lg text-dark-text tracking-tight leading-none">
+                                    TrackFlow<span className="text-primary font-black">.ai</span>
+                                </h2>
+                                <span className="text-slate-400 text-[10px] font-bold tracking-wider uppercase mt-1 block">
+                                    Logistics Platform
+                                </span>
+                            </div>
                         </div>
 
-                        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+                        <h1 className="text-3xl font-extrabold text-dark-text tracking-tight mb-1.5">
                             Launch Your Workspace
                         </h1>
-                        <p className="text-slate-500 mb-8">
+                        <p className="text-muted-gray text-sm leading-relaxed mb-8">
                             Get started by configuring your isolated multi-tenant company environment.
                         </p>
 
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
                                     Company Admin Name
                                 </label>
-                                <div className="relative rounded-2xl">
+                                <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                                         <User className="h-5 w-5" />
                                     </div>
@@ -110,7 +118,7 @@ export default function RegisterPage() {
                                         placeholder="John Doe"
                                         value={formData.admin_name}
                                         onChange={handleChange}
-                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                        className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                                         required
                                         aria-label="Admin Name"
                                     />
@@ -118,10 +126,10 @@ export default function RegisterPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
                                     Company Name
                                 </label>
-                                <div className="relative rounded-2xl">
+                                <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                                         <Building2 className="h-5 w-5" />
                                     </div>
@@ -131,7 +139,7 @@ export default function RegisterPage() {
                                         placeholder="Acme Logistics"
                                         value={formData.company_name}
                                         onChange={handleChange}
-                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                        className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                                         required
                                         aria-label="Company Name"
                                     />
@@ -139,10 +147,10 @@ export default function RegisterPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
                                     Company Subdomain
                                 </label>
-                                <div className="relative rounded-2xl">
+                                <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                                         <Globe className="h-5 w-5" />
                                     </div>
@@ -152,7 +160,7 @@ export default function RegisterPage() {
                                         placeholder="acme-logistics"
                                         value={formData.subdomain}
                                         onChange={handleChange}
-                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                        className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                                         required
                                         aria-label="Workspace Code Subdomain"
                                     />
@@ -160,10 +168,10 @@ export default function RegisterPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
                                     Admin Email
                                 </label>
-                                <div className="relative rounded-2xl">
+                                <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                                         <Mail className="h-5 w-5" />
                                     </div>
@@ -173,7 +181,7 @@ export default function RegisterPage() {
                                         placeholder="admin@acme.com"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                        className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                                         required
                                         aria-label="Admin Email"
                                     />
@@ -181,10 +189,10 @@ export default function RegisterPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
                                     Phone Number
                                 </label>
-                                <div className="relative rounded-2xl">
+                                <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                                         <Phone className="h-5 w-5" />
                                     </div>
@@ -194,7 +202,7 @@ export default function RegisterPage() {
                                         placeholder="+91 9876543210"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                        className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                                         required
                                         aria-label="Phone Number"
                                     />
@@ -202,10 +210,10 @@ export default function RegisterPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
                                     Password
                                 </label>
-                                <div className="relative rounded-2xl">
+                                <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                                         <Lock className="h-5 w-5" />
                                     </div>
@@ -215,7 +223,7 @@ export default function RegisterPage() {
                                         placeholder="••••••••"
                                         value={formData.password}
                                         onChange={handleChange}
-                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                        className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                                         required
                                         aria-label="Password"
                                     />
@@ -223,10 +231,10 @@ export default function RegisterPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-xs font-bold text-dark-text uppercase tracking-wider mb-2">
                                     Confirm Password
                                 </label>
-                                <div className="relative rounded-2xl">
+                                <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                                         <Lock className="h-5 w-5" />
                                     </div>
@@ -236,7 +244,7 @@ export default function RegisterPage() {
                                         placeholder="••••••••"
                                         value={formData.confirm_password}
                                         onChange={handleChange}
-                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10 transition-all outline-none"
+                                        className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
                                         required
                                         aria-label="Confirm Password"
                                     />
@@ -247,7 +255,7 @@ export default function RegisterPage() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white py-4 px-6 rounded-2xl font-semibold shadow-lg shadow-teal-600/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                                    className="w-full bg-gradient-to-r from-primary to-primary-dark hover:opacity-95 text-white h-12 rounded-xl font-bold shadow-lg shadow-primary/15 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer text-sm"
                                 >
                                     {loading ? (
                                         <>
@@ -264,11 +272,11 @@ export default function RegisterPage() {
                             </div>
                         </form>
 
-                        <p className="text-center mt-8 text-sm text-slate-500">
+                        <p className="text-center mt-8 text-sm text-muted-gray">
                             Already have an account?{' '}
                             <Link
                                 to="/login"
-                                className="font-semibold text-teal-600 hover:text-teal-700 transition-colors"
+                                className="font-bold text-primary hover:text-primary-dark hover:underline transition-colors"
                             >
                                 Sign In
                             </Link>
@@ -277,41 +285,44 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Right Features Column */}
-                <div className="hidden lg:col-span-5 bg-slate-900 p-12 flex flex-col justify-between text-white relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-teal-950/40 to-slate-950 opacity-90 z-0" />
+                <div className="hidden lg:col-span-5 bg-[#061a15] p-12 flex flex-col justify-between text-white relative overflow-hidden border-l border-primary/10 text-left">
+                    <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl"></div>
+                    <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-primary-dark/10 blur-3xl"></div>
                     
                     <div className="relative z-10 flex items-center gap-2">
-                        <span className="text-lg font-bold tracking-tight">TrackFlow Enterprise</span>
+                        <span className="text-sm font-bold tracking-wider uppercase text-primary bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
+                            TrackFlow Enterprise
+                        </span>
                     </div>
 
                     <div className="relative z-10 space-y-8 my-auto">
                         <div className="flex gap-4">
-                            <CheckCircle2 className="h-6 w-6 text-teal-400 shrink-0 mt-1" />
+                            <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
                             <div>
-                                <h3 className="font-bold text-lg text-white">Your Own Dedicated Subdomain</h3>
-                                <p className="text-slate-400 text-sm mt-1">Every registration auto-spawns an isolated Postgres tenant schema and dedicated workspace.</p>
+                                <h3 className="font-bold text-lg text-white">Dedicated Subdomains</h3>
+                                <p className="text-slate-400 text-sm mt-1">Every registration auto-spawns an isolated Postgres tenant database schema and custom workspace.</p>
                             </div>
                         </div>
 
                         <div className="flex gap-4">
-                            <CheckCircle2 className="h-6 w-6 text-teal-400 shrink-0 mt-1" />
+                            <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
                             <div>
-                                <h3 className="font-bold text-lg text-white">Secure Access Validation</h3>
-                                <p className="text-slate-400 text-sm mt-1">Includes Twilio SMS OTP verification and optional multi-factor authenticator setup.</p>
+                                <h3 className="font-bold text-lg text-white">MFA Verified Access</h3>
+                                <p className="text-slate-400 text-sm mt-1">Includes Twilio SMS OTP verification and optional multi-factor authentication setup.</p>
                             </div>
                         </div>
 
                         <div className="flex gap-4">
-                            <CheckCircle2 className="h-6 w-6 text-teal-400 shrink-0 mt-1" />
+                            <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
                             <div>
                                 <h3 className="font-bold text-lg text-white">Role-Based Team Control</h3>
-                                <p className="text-slate-400 text-sm mt-1">Dedicated portals for Company Admins, Operations Managers, and Field Employees.</p>
+                                <p className="text-slate-400 text-sm mt-1">Dedicated workflows for Company Admins, Operations Managers, and Courier Drivers.</p>
                             </div>
                         </div>
                     </div>
 
                     <div className="relative z-10 text-xs text-slate-500">
-                        <span>© 2026 TrackFlow AI Inc. All rights reserved.</span>
+                        <span>&copy; {new Date().getFullYear()} TrackFlow AI. All rights reserved.</span>
                     </div>
                 </div>
 

@@ -156,424 +156,397 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#F7F7F3] flex items-center justify-center px-6 py-10">
+        <div className="min-h-screen bg-bg-tint flex items-center justify-center p-4 sm:p-6 lg:p-8">
 
-            <div className="w-full max-w-7xl bg-white rounded-[30px] shadow-2xl overflow-hidden grid lg:grid-cols-2">
+            <div className="w-full max-w-6xl bg-white border border-border-light rounded-[2rem] shadow-xl overflow-hidden grid lg:grid-cols-12 min-h-[600px] hover:border-primary/10 transition-all duration-300">
 
-                {/* LEFT */}
+                {/* LEFT FORM PANEL */}
 
-                <div className="px-16 py-14 flex flex-col justify-center">
+                <div className="lg:col-span-7 px-8 sm:px-16 py-12 sm:py-16 flex flex-col justify-center text-left">
 
-                    <div className="flex items-center gap-3 mb-10">
+                    <div className="flex items-center gap-3 mb-8 group">
 
-                        <div className="w-12 h-12 rounded-2xl bg-emerald-700 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-primary-dark flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-primary/25">
 
-                            <ShieldCheck className="text-white w-6 h-6" />
+                            T
 
                         </div>
 
                         <div>
 
-                            <h2 className="font-bold text-2xl">
-                                TrackFlow AI
+                            <h2 className="font-extrabold text-lg text-dark-text tracking-tight leading-none">
+                                TrackFlow<span className="text-primary font-black">.ai</span>
                             </h2>
 
-                            <p className="text-sm text-gray-500">
+                            <span className="text-slate-400 text-[10px] font-bold tracking-wider uppercase mt-1 block">
                                 Logistics Platform
-                            </p>
+                            </span>
 
                         </div>
 
                     </div>
 
-                    <h1 className="text-5xl font-bold leading-tight text-gray-900">
+                    {workspaces.length === 0 ? (
+                        <>
+                            <h1 className="text-3xl sm:text-4xl font-extrabold text-dark-text tracking-tight">
 
-                        Welcome back
+                                Welcome back
 
-                    </h1>
+                            </h1>
 
-                    <p className="mt-4 text-gray-500 text-lg">
+                            <p className="mt-2 text-muted-gray text-sm sm:text-base leading-relaxed">
 
-                        Sign in to access your logistics workspace and manage operations securely.
-
-                    </p>
-
-                    {workspaces.length === 0 && (
-
-                        <form
-                            onSubmit={handleSubmit}
-                            className="mt-10 space-y-6"
-                        >
-
-                            {/* PHONE */}
-
-                            <div>
-
-                                <label className="text-sm font-semibold text-gray-700">
-
-                                    Phone Number
-
-                                </label>
-
-                                <div className="mt-2 relative">
-
-                                    <Phone
-                                        className="absolute left-4 top-4 text-gray-400"
-                                        size={20}
-                                    />
-
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        placeholder="+91 9876543210"
-                                        required
-                                        className="w-full pl-12 pr-4 h-14 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-emerald-600 outline-none transition"
-                                    />
-
-                                </div>
-
-                            </div>
-
-                            {/* PASSWORD */}
-
-                            <div>
-
-                                <div className="flex justify-between items-center mb-2">
-
-                                    <label className="text-sm font-semibold">
-
-                                        Password
-
-                                    </label>
-
-                                    <Link
-                                        to="/forgot-password"
-                                        className="text-sm text-emerald-700 font-semibold hover:underline"
-                                    >
-
-                                        Forgot password?
-
-                                    </Link>
-
-                                </div>
-
-                                <div className="relative">
-
-                                    <Lock
-                                        className="absolute left-4 top-4 text-gray-400"
-                                        size={20}
-                                    />
-
-                                    <input
-                                        type={
-                                            showPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder="Enter password"
-                                        className="w-full pl-12 pr-12 h-14 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-emerald-600 outline-none transition"
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setShowPassword(
-                                                !showPassword
-                                            )
-                                        }
-                                        className="absolute right-4 top-4 text-gray-500"
-                                    >
-
-                                        {showPassword ? (
-                                            <EyeOff size={20} />
-                                        ) : (
-                                            <Eye size={20} />
-                                        )}
-
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                            {/* LOGIN BUTTON */}
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full h-14 rounded-xl bg-emerald-700 hover:bg-emerald-800 transition text-white font-semibold flex items-center justify-center gap-2"
-                            >
-
-                                {loading ? (
-                                    "Signing In..."
-                                ) : (
-                                    <>
-                                        Sign In
-                                        <ArrowRight size={18} />
-                                    </>
-                                )}
-
-                            </button>
-
-                            {/* OR */}
-
-                            <div className="flex items-center gap-4 py-2">
-
-                                <div className="flex-1 border-t"></div>
-
-                                <span className="text-sm text-gray-400">
-
-                                    OR
-
-                                </span>
-
-                                <div className="flex-1 border-t"></div>
-
-                            </div>
-
-                            <GoogleLoginButton />
-
-                            <p className="text-center text-gray-500 pt-4">
-
-                                Don't have a company account?{" "}
-
-                                <Link
-                                    to="/register"
-                                    className="font-semibold text-emerald-700 hover:underline"
-                                >
-
-                                    Register Company
-
-                                </Link>
+                                Sign in to access your logistics workspace and manage operations securely.
 
                             </p>
 
-                            {/* WORKSPACE SELECTION */}
+                            <form
+                                onSubmit={handleSubmit}
+                                className="mt-8 space-y-5"
+                            >
 
-                            {workspaces.length > 0 && (
-                                <div className="mt-10 animate-fade-in">
+                                {/* PHONE */}
 
-                                    <h2 className="text-2xl font-bold text-gray-900">
-                                        Select Workspace
-                                    </h2>
+                                <div>
 
-                                    <p className="text-gray-500 mt-2 mb-6">
-                                        Your account belongs to multiple companies.
-                                        Select the workspace you want to enter.
-                                    </p>
+                                    <label className="text-xs font-bold text-dark-text uppercase tracking-wider">
 
-                                    <div className="space-y-4">
+                                        Phone Number
 
-                                        {workspaces.map((workspace) => (
+                                    </label>
 
-                                            <button
-                                                key={workspace.workspace_code}
-                                                onClick={() =>
-                                                    handleWorkspaceSelect(
-                                                        workspace.workspace_code
-                                                    )
-                                                }
-                                                disabled={loading}
-                                                className="
-                        w-full
-                        rounded-2xl
-                        border
-                        border-gray-200
-                        bg-white
-                        p-5
-                        hover:border-emerald-600
-                        hover:bg-emerald-50
-                        transition
-                        flex
-                        items-center
-                        justify-between
-                        group
-                        "
-                                            >
+                                    <div className="mt-2 relative">
 
-                                                <div className="text-left">
+                                        <Phone
+                                            className="absolute left-4 top-3.5 text-slate-400"
+                                            size={18}
+                                        />
 
-                                                    <h3 className="font-semibold text-lg text-gray-900">
-                                                        {workspace.name}
-                                                    </h3>
-
-                                                    <p className="text-sm text-gray-500 mt-1">
-                                                        {workspace.workspace_code}.localhost
-                                                    </p>
-
-                                                </div>
-
-                                                <ArrowRight
-                                                    className="text-emerald-700 group-hover:translate-x-1 transition"
-                                                    size={20}
-                                                />
-
-                                            </button>
-
-                                        ))}
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            placeholder="+91 9876543210"
+                                            required
+                                            className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
+                                        />
 
                                     </div>
 
-                                    <button
-                                        onClick={() => setWorkspaces([])}
-                                        className="
-                    mt-8
-                    text-sm
-                    text-gray-500
-                    hover:text-black
-                    font-medium
-                    "
-                                    >
-                                        ← Back
-                                    </button>
+                                </div>
+
+                                {/* PASSWORD */}
+
+                                <div>
+
+                                    <div className="flex justify-between items-center mb-2">
+
+                                        <label className="text-xs font-bold text-dark-text uppercase tracking-wider">
+
+                                            Password
+
+                                        </label>
+
+                                        <Link
+                                            to="/forgot-password"
+                                            className="text-xs text-primary font-bold hover:text-primary-dark hover:underline transition-colors"
+                                        >
+
+                                            Forgot password?
+
+                                        </Link>
+
+                                    </div>
+
+                                    <div className="relative">
+
+                                        <Lock
+                                            className="absolute left-4 top-3.5 text-slate-400"
+                                            size={18}
+                                        />
+
+                                        <input
+                                            type={
+                                                showPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="Enter password"
+                                            className="w-full pl-11 pr-11 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"
+                                        />
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setShowPassword(
+                                                    !showPassword
+                                                )
+                                            }
+                                            className="absolute right-4 top-3.5 text-slate-400 hover:text-dark-text transition-colors"
+                                        >
+
+                                            {showPassword ? (
+                                                <EyeOff size={18} />
+                                            ) : (
+                                                <Eye size={18} />
+                                            )}
+
+                                        </button>
+
+                                    </div>
 
                                 </div>
-                            )}
 
-                        </form>
+                                {/* LOGIN BUTTON */}
 
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full h-12 rounded-xl bg-gradient-to-r from-primary to-primary-dark hover:opacity-95 transition text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/15 hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-sm"
+                                >
+
+                                    {loading ? (
+                                        "Signing In..."
+                                    ) : (
+                                        <>
+                                            Sign In
+                                            <ArrowRight size={16} className="mt-0.5" />
+                                        </>
+                                    )}
+
+                                </button>
+
+                                {/* OR */}
+
+                                <div className="flex items-center gap-4 py-1">
+
+                                    <div className="flex-1 border-t border-border-light"></div>
+
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+
+                                        OR
+
+                                    </span>
+
+                                    <div className="flex-1 border-t border-border-light"></div>
+
+                                </div>
+
+                                <GoogleLoginButton />
+
+                                <p className="text-center text-muted-gray text-sm pt-2">
+
+                                    Don't have a company account?{" "}
+
+                                    <Link
+                                        to="/register"
+                                        className="font-bold text-primary hover:text-primary-dark hover:underline transition-colors"
+                                    >
+
+                                        Register Company
+
+                                    </Link>
+
+                                </p>
+
+                            </form>
+                        </>
+                    ) : (
+                        /* WORKSPACE SELECTION */
+                        <div className="animate-fade-in">
+
+                            <h2 className="text-2xl font-extrabold text-dark-text tracking-tight">
+                                Select Workspace
+                            </h2>
+
+                            <p className="text-muted-gray text-sm mt-2 mb-6">
+                                Your account belongs to multiple companies.
+                                Select the workspace you want to enter.
+                            </p>
+
+                            <div className="space-y-3">
+
+                                {workspaces.map((workspace) => (
+
+                                    <button
+                                        key={workspace.workspace_code}
+                                        onClick={() =>
+                                            handleWorkspaceSelect(
+                                                workspace.workspace_code
+                                            )
+                                        }
+                                        disabled={loading}
+                                        className="w-full rounded-xl border border-border-light bg-white p-4.5 hover:border-primary hover:bg-bg-tint/40 transition-all duration-200 flex items-center justify-between group cursor-pointer"
+                                    >
+
+                                        <div className="text-left">
+
+                                            <h3 className="font-bold text-base text-dark-text">
+                                                {workspace.name}
+                                            </h3>
+
+                                            <p className="text-xs text-muted-gray mt-0.5">
+                                                {workspace.workspace_code}.localhost
+                                            </p>
+
+                                        </div>
+
+                                        <ArrowRight
+                                            className="text-primary group-hover:translate-x-1 transition-transform"
+                                            size={18}
+                                        />
+
+                                    </button>
+
+                                ))}
+
+                            </div>
+
+                            <button
+                                onClick={() => setWorkspaces([])}
+                                className="mt-8 text-sm text-slate-400 hover:text-dark-text font-bold transition-colors cursor-pointer"
+                            >
+                                &larr; Back to login
+                            </button>
+
+                        </div>
                     )}
 
                 </div>
 
                 {/* RIGHT PANEL */}
 
-                <div className="hidden lg:flex bg-[#155E52] relative overflow-hidden">
+                <div className="hidden lg:col-span-5 lg:flex bg-[#061a15] relative overflow-hidden flex-col justify-between p-12 text-left border-l border-primary/10">
 
                     {/* Background Decoration */}
 
-                    <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-white/10 blur-3xl"></div>
+                    <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl"></div>
 
-                    <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-emerald-300/10 blur-3xl"></div>
+                    <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-primary-dark/10 blur-3xl"></div>
 
-                    <div className="relative z-10 flex flex-col justify-between w-full p-14">
+                    {/* Top Tag */}
 
-                        {/* Top */}
+                    <div>
 
-                        <div>
+                        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5">
 
-                            <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
+                            <ShieldCheck
+                                size={14}
+                                className="text-primary"
+                            />
 
-                                <ShieldCheck
-                                    size={18}
-                                    className="text-emerald-300"
-                                />
+                            <span className="text-white text-xs font-bold uppercase tracking-wider">
 
-                                <span className="text-white text-sm font-semibold">
+                                Enterprise SaaS
 
-                                    Enterprise SaaS
+                            </span>
 
-                                </span>
+                        </div>
+
+                    </div>
+
+                    {/* Middle Quote */}
+
+                    <div className="my-auto py-12 relative z-10">
+
+                        <div className="flex items-center gap-0.5 text-primary text-sm">
+
+                            ★ ★ ★ ★ ★
+
+                        </div>
+
+                        <p className="text-white text-2xl font-bold leading-relaxed mt-4 font-sans tracking-tight">
+
+                            "TrackFlow AI transformed how we manage logistics.
+
+                            Every shipment, employee and warehouse is now managed
+
+                            from one secure platform."
+
+                        </p>
+
+                        <div className="mt-8 flex items-center gap-3">
+
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-primary to-primary-dark flex items-center justify-center text-white text-lg font-extrabold shadow-md shadow-primary/10">
+
+                                R
+
+                            </div>
+
+                            <div>
+
+                                <h3 className="text-white font-bold text-base leading-tight">
+
+                                    Rahul Sharma
+
+                                </h3>
+
+                                <p className="text-primary-dark text-xs font-medium">
+
+                                    Operations Head
+
+                                </p>
 
                             </div>
 
                         </div>
 
-                        {/* Middle */}
+                    </div>
 
-                        <div>
+                    {/* Bottom Statistics */}
 
-                            <div className="flex items-center gap-1 text-yellow-300 text-xl">
+                    <div className="grid grid-cols-3 gap-4 relative z-10">
 
-                                ★ ★ ★ ★ ★
+                        <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-4 text-left">
 
-                            </div>
+                            <h2 className="text-2xl font-black text-white leading-none">
 
-                            <p className="text-white text-3xl font-bold leading-relaxed mt-6">
+                                500+
 
-                                "TrackFlow AI transformed how we manage logistics.
+                            </h2>
 
-                                Every shipment, employee and warehouse is now managed
+                            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mt-1.5">
 
-                                from one secure platform."
+                                Companies
 
                             </p>
 
-                            <div className="mt-10 flex items-center gap-4">
+                        </div>
 
-                                <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-white text-xl font-bold">
+                        <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-4 text-left">
 
-                                    R
+                            <h2 className="text-2xl font-black text-white leading-none">
 
-                                </div>
+                                3200+
 
-                                <div>
+                            </h2>
 
-                                    <h3 className="text-white font-bold text-lg">
+                            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mt-1.5">
 
-                                        Rahul Sharma
+                                Employees
 
-                                    </h3>
-
-                                    <p className="text-emerald-100">
-
-                                        Operations Head
-
-                                    </p>
-
-                                </div>
-
-                            </div>
+                            </p>
 
                         </div>
 
-                        {/* Bottom Statistics */}
+                        <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-4 text-left">
 
-                        <div className="grid grid-cols-3 gap-5">
+                            <h2 className="text-2xl font-black text-white leading-none">
 
-                            <div className="bg-white rounded-2xl p-6">
+                                98%
 
-                                <h2 className="text-4xl font-bold text-emerald-700">
+                            </h2>
 
-                                    500+
+                            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mt-1.5">
 
-                                </h2>
+                                Success Rate
 
-                                <p className="text-gray-500 mt-2">
-
-                                    Companies
-
-                                </p>
-
-                            </div>
-
-                            <div className="bg-white rounded-2xl p-6">
-
-                                <h2 className="text-4xl font-bold text-emerald-700">
-
-                                    3200+
-
-                                </h2>
-
-                                <p className="text-gray-500 mt-2">
-
-                                    Employees
-
-                                </p>
-
-                            </div>
-
-                            <div className="bg-white rounded-2xl p-6">
-
-                                <h2 className="text-4xl font-bold text-emerald-700">
-
-                                    98%
-
-                                </h2>
-
-                                <p className="text-gray-500 mt-2">
-
-                                    Delivery Success
-
-                                </p>
-
-                            </div>
+                            </p>
 
                         </div>
 
