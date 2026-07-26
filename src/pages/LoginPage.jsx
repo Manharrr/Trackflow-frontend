@@ -474,7 +474,7 @@ export default function LoginPage() {
 
                             <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-primary to-primary-dark flex items-center justify-center text-white text-lg font-extrabold shadow-md shadow-primary/10">
 
-                                R
+                                S
 
                             </div>
 
@@ -482,7 +482,7 @@ export default function LoginPage() {
 
                                 <h3 className="text-white font-bold text-base leading-tight">
 
-                                    Rahul Sharma
+                                    shabin mohammed
 
                                 </h3>
 

@@ -113,7 +113,7 @@ export default function VerifyPhonePage() {
                         >
                             Resend Code
                         </button>
-                        
+
                         <Link
                             to="/login"
                             className="inline-flex items-center justify-center gap-1.5 text-sm font-bold text-slate-400 hover:text-dark-text transition-colors mt-2"
