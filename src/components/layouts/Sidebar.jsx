@@ -26,7 +26,7 @@ export default function Sidebar() {
       { name: 'Dashboard', path: '/super-admin', icon: LayoutDashboard },
       { name: 'Companies', path: '/super-admin/companies', icon: Building2 },
       { name: 'Analytics', path: '/super-admin/analytics', icon: BarChart3 },
-      { name: 'Profile', path: '/profile', icon: User },
+      // { name: 'Profile', path: '/profile', icon: User },
     ]
   } else if (user?.role === 'company_admin') {
     menu = [
@@ -39,13 +39,13 @@ export default function Sidebar() {
     menu = [
       { name: 'Dashboard', path: '/operations', icon: LayoutDashboard },
       { name: 'Orders', path: '/operations/orders', icon: Package },
-      { name: 'Employees', path: '/dashboard/employees/create', icon: Users },
+      { name: 'Employees', path: '/dashboard/employees', icon: Users },
     ]
   } else {
     menu = [
       { name: 'Dashboard', path: '/employee', icon: LayoutDashboard },
       { name: 'Assigned Orders', path: '/employee/orders', icon: Package },
-      { name: 'Profile', path: '/employee/profile', icon: User },
+      // { name: 'Profile', path: '/employee/profile', icon: User },
     ]
   }
 

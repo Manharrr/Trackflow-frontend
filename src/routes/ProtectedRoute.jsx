@@ -1,14 +1,45 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
+// Centralized permission map matching exact paths and patterns using RegExp
+const ROUTE_PERMISSIONS = {
+  super_admin: [
+    /^\/super-admin(\/.*)?$/,
+    /^\/profile$/,
+    /^\/change-password$/,
+    /^\/mfa\/setup$/
+  ],
+  company_admin: [
+    /^\/dashboard(\/.*)?$/,
+    /^\/profile$/,
+    /^\/settings$/,
+    /^\/change-password$/,
+    /^\/mfa\/setup$/
+  ],
+  operations_manager: [
+    /^\/operations(\/.*)?$/,
+    /^\/orders\/create$/,
+    /^\/dashboard\/orders(\/.*)?$/,
+    /^\/dashboard\/employees(\/.*)?$/,
+    /^\/profile$/,
+    /^\/settings$/,
+    /^\/change-password$/,
+    /^\/mfa\/setup$/
+  ],
+  employee: [
+    /^\/employee(\/.*)?$/,
+    // Matches detail view with UUID pattern, forbids lists /edit
+    /^\/dashboard\/orders\/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/,
+    /^\/profile$/,
+    /^\/settings$/,
+    /^\/change-password$/,
+    /^\/mfa\/setup$/
+  ]
+};
+
 export default function ProtectedRoute({ children }) {
   const { isAuthenticated, isLoading, user } = useAuth()
   const location = useLocation()
-  console.log("PROTECTED ROUTE", location.pathname)
-  console.log("IS AUTHENTICATED", isAuthenticated)
-  console.log("USER", user)
-  console.log("ROLE", user?.role)
-  console.log("TENANT", user?.tenant)
 
   if (isLoading) {
     return (
@@ -30,35 +61,19 @@ export default function ProtectedRoute({ children }) {
     return children
   }
 
-
-
   // Role Routing Access Authorization Check
   const path = location.pathname
-  const role = user?.role
+  const role = user?.role || 'employee'
 
-  if (role === 'super_admin') {
-    // Super admin must reside in paths starting with /super-admin, profile, settings, or setup
-    const isSuperPath = path.startsWith('/super-admin') || path === '/profile' || path === '/change-password' || path === '/mfa/setup'
-    if (!isSuperPath) {
-      return <Navigate to="/super-admin" replace />
-    }
-  } else if (role === 'company_admin') {
-    // Company admin stays in dashboard and company management pages
-    const isForbidden = path.startsWith('/super-admin') || path.startsWith('/operations') || path.startsWith('/employee')
-    if (isForbidden) {
-      return <Navigate to="/dashboard" replace />
-    }
-  } else if (role === 'operations_manager') {
-    const isForbidden = path.startsWith('/super-admin') || path.startsWith('/dashboard') || path.startsWith('/employee')
-    if (isForbidden) {
-      return <Navigate to="/operations" replace />
-    }
-  } else {
-    // Normal Employee
-    const isForbidden = path.startsWith('/super-admin') || path.startsWith('/dashboard') || path.startsWith('/operations')
-    if (isForbidden) {
-      return <Navigate to="/employee" replace />
-    }
+  const allowedRoutes = ROUTE_PERMISSIONS[role] || [];
+  const isAuthorized = allowedRoutes.some(regex => regex.test(path));
+
+  if (!isAuthorized) {
+    // Redirect to default dashboard
+    if (role === 'super_admin') return <Navigate to="/super-admin" replace />;
+    if (role === 'company_admin') return <Navigate to="/dashboard" replace />;
+    if (role === 'operations_manager') return <Navigate to="/operations" replace />;
+    return <Navigate to="/employee" replace />;
   }
 
   return children

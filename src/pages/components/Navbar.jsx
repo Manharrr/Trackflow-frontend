@@ -13,7 +13,7 @@ export default function Navbar() {
             T
           </div>
           <span className="text-2xl font-black text-dark-text tracking-tight font-sans transition-colors duration-300 group-hover:text-primary-dark">
-            TrackFlow<span className="text-primary">.ai</span>
+            TrackFlow<span className="text-primary">.</span>
           </span>
         </Link>
 

@@ -23,6 +23,7 @@ import AnalyticsPage from './pages/super-admin/AnalyticsPage'
 // import SettingsPage from './pages/super-admin/SettingsPage'
 
 import CompanyDashboard from './pages/company-admin/CompanyDashboard'
+import CompanyAnalyticsPage from './pages/company-admin/CompanyAnalyticsPage'
 import CompanySetupPage from './pages/company-admin/CompanySetupPage'
 import ProfilePage from './pages/company-admin/ProfilePage'
 import CompanySettingsPage from './pages/company-admin/SettingsPage'
@@ -33,8 +34,13 @@ import OperationsDashboard from './pages/operations/OperationsDashboard'
 import EmployeeDashboard from './pages/employee/EmployeeDashboard'
 import CompanyDetailsPage from './pages/super-admin/CompanyDetailsPage'
 
-import OrdersPage from './pages/company-admin/OrderPage'
+import OrdersDashboard from './pages/orders/OrdersDashboard'
+import OrdersListPage from './pages/orders/OrdersListPage'
+import OrderDetailsPage from './pages/orders/OrderDetailsPage'
+import OrderCreatePage from './pages/orders/OrderCreatePage'
 import EmployeeCreatePage from './pages/company-admin/employees/EmployeeCreatePage'
+import EmployeeListPage from './pages/company-admin/employees/EmployeeListPage'
+import EmployeeDetailsPage from './pages/company-admin/employees/EmployeeDetailsPage'
 import ActivateAccountPage from './pages/auth/ActivateAccountPage'
 
 
@@ -190,7 +196,7 @@ export default function App() {
 
                 <Route
                     path="/dashboard/employees"
-                    element={<EmployeeCreatePage />}
+                    element={<EmployeeListPage />}
                 />
 
                 <Route
@@ -199,19 +205,49 @@ export default function App() {
                 />
 
                 <Route
+                    path="/dashboard/employees/:employeeId"
+                    element={<EmployeeDetailsPage />}
+                />
+
+                <Route
                     path="/operations/employees/create"
                     element={<EmployeeCreatePage />}
                 />
 
                 <Route
-    path="/dashboard/orders"
-    element={<OrdersPage />}
-/>
+                    path="/dashboard/orders"
+                    element={<OrdersListPage />}
+                />
+
+                <Route
+                    path="/dashboard/orders/dashboard"
+                    element={<OrdersDashboard />}
+                />
+
+                <Route
+                    path="/dashboard/orders/create"
+                    element={<OrderCreatePage />}
+                />
+
+                <Route
+                    path="/orders/create"
+                    element={<OrderCreatePage />}
+                />
+
+                <Route
+                    path="/dashboard/orders/:orderId"
+                    element={<OrderDetailsPage />}
+                />
+
+                <Route
+                    path="/dashboard/orders/:orderId/edit"
+                    element={<OrderCreatePage />}
+                />
 
 
 <Route
     path="/dashboard/analytics"
-    element={<CompanyDashboard />}
+    element={<CompanyAnalyticsPage />}
 />
 
                 <Route
@@ -240,12 +276,20 @@ export default function App() {
                     path="/operations"
                     element={<OperationsDashboard />}
                 />
+                <Route
+                    path="/operations/orders"
+                    element={<OrdersListPage />}
+                />
 
                 {/* Employee */}
 
                 <Route
                     path="/employee"
                     element={<EmployeeDashboard />}
+                />
+                <Route
+                    path="/employee/orders"
+                    element={<OrdersListPage />}
                 />
 
             </Route>
