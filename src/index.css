@@ -24,6 +24,7 @@ body {
   color: var(--color-charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* user-select: none; */
 }
 
 h1, h2, h3, h4, h5, h6 {
