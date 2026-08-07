@@ -28,7 +28,7 @@ export default function PendingApprovalPage() {
         <Link
           to="/login"
           className="w-full inline-block mt-8 bg-gradient-to-r from-primary to-primary-dark hover:opacity-95 text-white h-12 rounded-xl font-bold shadow-lg shadow-primary/15 transition-all duration-200 flex items-center justify-center cursor-pointer text-sm"
-        >
+>
           Back To Login
         </Link>
       </div>
