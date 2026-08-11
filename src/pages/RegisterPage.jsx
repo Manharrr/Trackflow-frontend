@@ -124,7 +124,7 @@ export default function RegisterPage() {
                   <input
                     type="text"
                     name="admin_name"
-                    placeholder="John Doe"
+                    placeholder="your name"
                     value={formData.admin_name}
                     onChange={handleChange}
                     className="w-full pl-11 pr-4 h-12 rounded-xl border border-border-light bg-white focus:border-primary outline-none transition-all duration-200 focus:ring-4 focus:ring-primary/10 text-sm"

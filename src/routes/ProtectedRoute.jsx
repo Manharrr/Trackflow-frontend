@@ -7,14 +7,16 @@ const ROUTE_PERMISSIONS = {
     /^\/super-admin(\/.*)?$/,
     /^\/profile$/,
     /^\/change-password$/,
-    /^\/mfa\/setup$/
+    /^\/mfa\/setup$/,
+    /^\/chat(\/.*)?$/
   ],
   company_admin: [
     /^\/dashboard(\/.*)?$/,
     /^\/profile$/,
     /^\/settings$/,
     /^\/change-password$/,
-    /^\/mfa\/setup$/
+    /^\/mfa\/setup$/,
+    /^\/chat(\/.*)?$/
   ],
   operations_manager: [
     /^\/operations(\/.*)?$/,
@@ -24,7 +26,8 @@ const ROUTE_PERMISSIONS = {
     /^\/profile$/,
     /^\/settings$/,
     /^\/change-password$/,
-    /^\/mfa\/setup$/
+    /^\/mfa\/setup$/,
+    /^\/chat(\/.*)?$/
   ],
   employee: [
     /^\/employee(\/.*)?$/,
@@ -33,7 +36,8 @@ const ROUTE_PERMISSIONS = {
     /^\/profile$/,
     /^\/settings$/,
     /^\/change-password$/,
-    /^\/mfa\/setup$/
+    /^\/mfa\/setup$/,
+    /^\/chat(\/.*)?$/
   ]
 };
 

@@ -12,7 +12,8 @@ import {
   Menu,
   ChevronLeft,
   ChevronRight,
-  LogOut
+  LogOut,
+  MessageSquare
 } from 'lucide-react'
 
 export default function Sidebar() {
@@ -34,17 +35,20 @@ export default function Sidebar() {
       { name: 'Orders', path: '/dashboard/orders', icon: Package },
       { name: 'Employees', path: '/dashboard/employees', icon: Users },
       { name: 'Analytics', path: '/dashboard/analytics', icon: BarChart3 },
+      { name: 'Chat', path: '/chat', icon: MessageSquare },
     ]
   } else if (user?.role === 'operations_manager') {
     menu = [
       { name: 'Dashboard', path: '/operations', icon: LayoutDashboard },
       { name: 'Orders', path: '/operations/orders', icon: Package },
       { name: 'Employees', path: '/dashboard/employees', icon: Users },
+      { name: 'Chat', path: '/chat', icon: MessageSquare },
     ]
   } else {
     menu = [
       { name: 'Dashboard', path: '/employee', icon: LayoutDashboard },
       { name: 'Assigned Orders', path: '/employee/orders', icon: Package },
+      { name: 'Chat', path: '/chat', icon: MessageSquare },
       // { name: 'Profile', path: '/employee/profile', icon: User },
     ]
   }

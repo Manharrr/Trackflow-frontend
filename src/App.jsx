@@ -3,6 +3,8 @@ import { useAuth } from './contexts/AuthContext'
 
 import ProtectedRoute from './routes/ProtectedRoute'
 import DashboardLayout from './layouts/DashboardLayout'
+import { ChatProvider } from './features/chat/context/ChatContext'
+import ChatPage from './features/chat/pages/ChatPage'
 
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -245,10 +247,10 @@ export default function App() {
                 />
 
 
-<Route
-    path="/dashboard/analytics"
-    element={<CompanyAnalyticsPage />}
-/>
+                <Route
+                    path="/dashboard/analytics"
+                    element={<CompanyAnalyticsPage />}
+                />
 
                 <Route
                     path="/profile"
@@ -290,6 +292,24 @@ export default function App() {
                 <Route
                     path="/employee/orders"
                     element={<OrdersListPage />}
+                />
+
+                {/* Chat Module */}
+                <Route
+                    path="/chat"
+                    element={
+                        <ChatProvider>
+                            <ChatPage />
+                        </ChatProvider>
+                    }
+                />
+                <Route
+                    path="/chat/:conversationId"
+                    element={
+                        <ChatProvider>
+                            <ChatPage />
+                        </ChatProvider>
+                    }
                 />
 
             </Route>

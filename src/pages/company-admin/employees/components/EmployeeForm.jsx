@@ -75,7 +75,7 @@ export default function EmployeeForm({ onSubmit, onCancel, isLoading }) {
               name="full_name"
               value={formData.full_name}
               onChange={handleChange}
-              placeholder="e.g. John Doe"
+              placeholder="e.g. your name"
               className={`w-full px-4 py-3 rounded-xl border ${
                 errors.full_name ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : "border-slate-200 focus:ring-[#0F6E56] focus:border-[#0F6E56]"
               } focus:outline-none focus:ring-2 bg-slate-50/50 transition-all`}
@@ -94,7 +94,7 @@ export default function EmployeeForm({ onSubmit, onCancel, isLoading }) {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="e.g. john.doe@trackflow.ai"
+              placeholder="e.g. yourname@trackflow.ai"
               className={`w-full px-4 py-3 rounded-xl border ${
                 errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : "border-slate-200 focus:ring-[#0F6E56] focus:border-[#0F6E56]"
               } focus:outline-none focus:ring-2 bg-slate-50/50 transition-all`}

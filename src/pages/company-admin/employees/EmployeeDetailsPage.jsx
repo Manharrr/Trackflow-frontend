@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getEmployeeDetails } from "./services/employeeService";
 import { getOperationsLeaderboard } from "../../../services/ordersService";
+import { chatApi } from "../../../features/chat/api/chatApi";
 import { 
   ArrowLeft, 
   User, 
@@ -53,6 +54,15 @@ export default function EmployeeDetailsPage() {
       fetchDetails();
     }
   }, [employeeId]);
+
+  const handleStartMessage = async () => {
+    try {
+      const conv = await chatApi.createConversation(employeeId);
+      navigate(`/chat/${conv.id}`);
+    } catch (err) {
+      toast.error("Failed to start conversation.");
+    }
+  };
 
   if (loading) {
     return (
@@ -125,12 +135,22 @@ export default function EmployeeDetailsPage() {
             <h1 className="text-3xl font-extrabold text-dark-text tracking-tight">
               {employee.full_name}
             </h1>
-            <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-muted-gray">
+            <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-muted-gray w-full">
               <span className="font-mono bg-bg-tint border border-border-light px-2.5 py-0.5 rounded text-xs text-primary-dark">
                 Code: {employee.employee_code || "N/A"}
               </span>
               <span>&bull;</span>
               <span className="capitalize">{employee.role.replace("_", " ")}</span>
+              
+              <button
+                onClick={handleStartMessage}
+                className="ml-auto inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-sm text-xs font-bold transition-all cursor-pointer"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                Send Message
+              </button>
             </div>
           </div>
 
